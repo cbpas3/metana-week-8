@@ -126,3 +126,33 @@ STOP
 ```
 
 The code creates a smart contract with the call data defining the constructor. If the size of the code of the created smart contract is equal to 1 then it jumps over the revert to the end of the code. To complete the puzzle, the size of the smart contract created should be equal to 1 so the call data passed was "0x60016000526001601FF3" .
+
+## #8
+
+```
+CALLDATASIZE
+PUSH1 0x00
+DUP1
+CALLDATACOPY
+CALLDATASIZE
+PUSH1 0x00
+PUSH1 0x00
+CREATE
+PUSH1 0x00
+DUP1
+DUP1
+DUP1
+DUP1
+SWAP5
+GAS
+CALL
+PUSH1 0x00
+EQ
+PUSH1 0x1B
+JUMPI
+REVERT
+JUMPDEST
+STOP
+```
+
+The code creates a smart contract with the call data defining the constructor similar to problem 7. In this case, to get over the revert, the newly deployed contract needs to revert. The call data passed was "0x63600080FD6000526004601CF3". The constructor creates a contract that pushes zero to the stack, duplicates it to act as input for the final opcode which is revert. If a contract reverts when the opcode CALL is used then it returns 0.
