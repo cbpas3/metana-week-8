@@ -180,4 +180,34 @@ JUMPDEST
 STOP
 ```
 
-The code starts by comparing the call data size to 3. If the call data size is greater than three then it is able to jump. Then it multiplies the call value to the call data and compares that to 8. If they are equal then it is able to jump to the end. To solve the puzzle there are two equations, 3 < call data size and call data size \* call value = 8. Solving for both we get call data size = 4 and call value = 2.
+The code starts by comparing the call data size to 3. If the call data size is greater than three then it is able to jump. Then it multiplies the call value to the call data and compares that to 8. If they are equal then it is able to jump to the end. To solve the puzzle there are two equations, 3 < call data size and call data size \* call value = 8. Solving for both we get call data size = 4 and call value = 2. The call data passed was 0x00000000.
+
+## #10
+
+```
+CODESIZE
+CALLVALUE
+SWAP1
+GT
+PUSH1 0x08
+JUMPI
+REVERT
+JUMPDEST
+CALLDATASIZE
+PUSH2 0x0003
+SWAP1
+MOD
+ISZERO
+CALLVALUE
+PUSH1 0x0A
+ADD
+JUMPI
+REVERT
+REVERT
+REVERT
+REVERT
+JUMPDEST
+STOP
+```
+
+The first jump requires that the code size, which is 27, is greater than the call value. The second jump requires that the call data size modulo 3 be zero and the call value plus 10 be equal to the last jump dest which is 25. We then have 3 equations to solve the puzzle, call value < 27, call data size % 3 = 0, and, call value + 10 = 25. Solving for the call value we get 15 and the call data size can be anything divisible by 3. In this case I used 3.
