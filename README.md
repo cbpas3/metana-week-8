@@ -1,5 +1,7 @@
 # EVM PUZZLES SOLUTIONS
 
+Puzzles by fvictorio (https://github.com/fvictorio/evm-puzzles)
+
 ## #1
 
 ```
