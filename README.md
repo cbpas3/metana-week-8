@@ -156,3 +156,28 @@ STOP
 ```
 
 The code creates a smart contract with the call data defining the constructor similar to problem 7. In this case, to get over the revert, the newly deployed contract needs to revert. The call data passed was "0x63600080FD6000526004601CF3". The constructor creates a contract that pushes zero to the stack, duplicates it to act as input for the final opcode which is revert. If a contract reverts when the opcode CALL is used then it returns 0.
+
+## #9
+
+```
+CALLDATASIZE
+PUSH1 0x03
+LT
+PUSH1 0x09
+JUMPI
+REVERT
+REVERT
+JUMPDEST
+CALLVALUE
+CALLDATASIZE
+MUL
+PUSH1 0x08
+EQ
+PUSH1 0x14
+JUMPI
+REVERT
+JUMPDEST
+STOP
+```
+
+The code starts by comparing the call data size to 3. If the call data size is greater than three then it is able to jump. Then it multiplies the call value to the call data and compares that to 8. If they are equal then it is able to jump to the end. To solve the puzzle there are two equations, 3 < call data size and call data size \* call value = 8. Solving for both we get call data size = 4 and call value = 2.
